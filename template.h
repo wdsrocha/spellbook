@@ -2,13 +2,15 @@
 using namespace std;
 
 #define _ ios_base::sync_with_stdio(0);
+#define endl '\n'
 #define INF ((int)1e9)
 #define MOD7 (INF + 7)
 #define MOD11 (INF + 11)
 #define EPS (1e-9)
 #define PI (acos(-1))
 #define SZ(x) ((int)x.size())
-#define pb push_back
+#define eb emplace_back
+#define pb eb
 #define fi first
 #define se second
 #define ull unsigned long long
@@ -24,6 +26,8 @@ using namespace std;
 #define vdd vector <dd>
 #define vvd vector <vd>
 #define vvdd vector <vdd>
+#define FOR(i, n) for(int i=0;i<n;i++)
+#define FOR(i, a, b) for(int i=a; i<b; i++)
 #define ALL(x) (x).begin(), (x).end()
 #define debug(x) cout<<#x<<" is "<<x<<endl;
 #define printList(x, y) for(int i=0;i<SZ(x);i++)cout<<setw(y)<<x[i];cout<<endl;
