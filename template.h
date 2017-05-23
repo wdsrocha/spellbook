@@ -27,5 +27,4 @@ using namespace std;
 #define vvd vector <vd>
 #define vvdd vector <vdd>
 #define ALL(x) (x).begin(), (x).end()
-#define debug(x) cout<<#x<<" is "<<x<<endl;
-#define printList(x, y) for(int i=0;i<SZ(x);i++)cout<<setw(y)<<x[i];cout<<endl;
+#define FOR(i,n) for (int i = 0; i < n; i++)
