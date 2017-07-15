@@ -1,11 +1,12 @@
-// http://wcipeg.com/problem/segtree
+// https:www.urionlinejudge.com.br/judge/pt/problems/view/1500
 
 #include <bits/stdc++.h>
 using namespace std;
 
+#define int long long
 #define INF ((int)1e9)
 #define MAX 100010
-#define DEFAULT INF
+#define DEFAULT 0
 
 int n, q, a[MAX], tree[4*MAX], lazy[4*MAX];
 
@@ -15,10 +16,9 @@ void build(int u, int l, int r) {
         tree[u] = a[l];
         return;
     } 
-
     build(2*u, l, (l+r)/2);
     build(2*u+1, (l+r)/2+1, r);
-    tree[u] = min(tree[2*u], tree[2*u+1]);
+    tree[u] = tree[2*u] + tree[2*u+1];
 }
 
 void propagate(int u, int l, int r) {
@@ -34,27 +34,22 @@ void propagate(int u, int l, int r) {
 
 int query(int u, int l, int r, int i, int j) {
     propagate(u, l, r);
-
     if (r < i or l > j) {
-        return INF;
+        return 0;
     }
-
     if (l >= i and r <= j) {
         return tree[u];
     }
-
     int lside = query(2*u, l, (l+r)/2, i, j);
     int rside = query(2*u+1, (l+r)/2+1, r, i, j);
-    return min(lside, rside);
+    return lside + rside;
 }
 
 void updateRange(int u, int l, int r, int i, int j, int value) {
     propagate(u, l, r);
-
     if (l > r or r < i or l > j) {
         return;
     }
-
     if (l >= i and r <= j) {
         tree[u] += (r-l+1)*value;
         if (l != r) {
@@ -63,29 +58,26 @@ void updateRange(int u, int l, int r, int i, int j, int value) {
         }
         return;
     }
-
     updateRange(2*u, l, (l+r)/2, i, j, value);
     updateRange(2*u+1, (l+r)/2+1, r, i, j, value);
-    tree[u] = min(tree[2*u], tree[2*u+1]);
+    tree[u] = tree[2*u] + tree[2*u+1];
 }
 
-int main() {
-    while (cin >> n >> q) {
-        for (int i = 0; i < n; i++) {
-            cin >> a[i];
-        }
-        build(1, 0, n-1);
+signed main() {
+    int t, cmd, i, j, x;
+    cin >> t;
+    while (t--) {
+        cin >> n >> q;
+        build(1, 1, n);
         while (q--) {
-            char cmd;
-            int i, j;
             cin >> cmd >> i >> j;
-            if (cmd == 'Q') {
-                cout << query(1, 0, n-1, i, j) << endl;
+            if (cmd) {
+                cout << query(1, 1, n, i, j) << endl;
             } else {
-                updateRange(1, 0, n-1, i, i, j-a[i]);
+                cin >> x;
+                updateRange(1, 1, n, i, j, x);
             }
         }
     }
-
     return 0;
 }
