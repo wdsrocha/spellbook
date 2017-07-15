@@ -6,16 +6,16 @@ using namespace std;
 #define INF ((int)1e9)
 #define MAX 100010
 
-int n, q, a[MAX], t[4*MAX];
+int n, q, a[MAX], tree[4*MAX];
 
 int build(int u, int l, int r) {
     if (l == r) {
-        return t[u] = a[l];
+        return tree[u] = a[l];
     } 
 
     build(2*u, l, (l+r)/2);
     build(2*u+1, (l+r)/2+1, r);
-    return t[u] = min(t[2*u], t[2*u+1]);
+    return tree[u] = min(tree[2*u], tree[2*u+1]);
 }
 
 int query(int u, int l, int r, int i, int j) {
@@ -26,7 +26,7 @@ int query(int u, int l, int r, int i, int j) {
 
     // 2. [l,r] está dentro de [i, j]
     if (l >= i and r <= j) {
-        return t[u];
+        return tree[u];
     }
 
     // 3. [l, r] está parcialmente em [i, j]
@@ -37,7 +37,7 @@ int query(int u, int l, int r, int i, int j) {
 
 int update(int u, int l, int r, int target, int value) {
     if (l == r) {
-        return t[u] = value;
+        return tree[u] = value;
     }
 
     if (target <= (l+r)/2) {
@@ -45,8 +45,8 @@ int update(int u, int l, int r, int target, int value) {
     } else {
         update(2*u+1, (l+r)/2+1, r, target, value);
     }
-    
-    return t[u] = min(t[2*u], t[2*u+1]);
+
+    return tree[u] = min(tree[2*u], tree[2*u+1]);
 }
 
 int main() {
